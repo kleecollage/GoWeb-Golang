@@ -15,7 +15,7 @@ const url = "root@tcp(localhost:3306)/goweb_db"
 var db *sql.DB
 
 // Crea la conexion
-func Conenct() {
+func Connect() {
 	connection, err := sql.Open("mysql", url)
 	if err != nil {
 		panic(err)
@@ -39,7 +39,7 @@ func Ping() {
 // Verificar s la tabla existe
 func ExistsTable(tableName string) bool {
 	sql := fmt.Sprintf("SHOW TABLES LIKE '%s'", tableName)
-	row, err := db.Query(sql)
+	row, err := Query(sql)
 	if err != nil {
 		fmt.Println("Error: ", err)
 	}
@@ -65,7 +65,9 @@ func TruncateTable(tableName string) {
 // Polimorfismo de Exec
 // De esta forma es posiible usarlo en otros paquetes
 func Exec(query string, args ...interface{}) (sql.Result, error) {
+	Connect()
 	result, err := db.Exec(query, args...)
+	Close()
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -74,7 +76,9 @@ func Exec(query string, args ...interface{}) (sql.Result, error) {
 
 // Polimorfismo de Query
 func Query(query string, args ...interface{}) (*sql.Rows, error) {
+	Connect()
 	rows, err := db.Query(query, args...)
+	Close()
 	if err != nil {
 		fmt.Println(err)
 	}
