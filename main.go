@@ -1,7 +1,8 @@
 package main
 
 import (
-	"goweb/handlers"
+	"goorm/handlers"
+	"goorm/models"
 	"log"
 	"net/http"
 
@@ -9,6 +10,8 @@ import (
 )
 
 func main() {
+	// Crar Tablas
+	models.MigrarUser()
 	// Rutas
 	mux := mux.NewRouter()
 	//Endpoints
@@ -20,32 +23,3 @@ func main() {
 
 	log.Fatal(http.ListenAndServe(":3000", mux))
 }
-
-/* func dbMethodsTest() {
-	db.Conenct()
-
-	db.Ping()
-	fmt.Println(db.ExistsTable("users"))
-
-	db.CreateTable(models.UserSchema, "users")
-	fmt.Println(models.ListUsers())
-	db.TruncateTable("users")
-
-	user := models.CreateUser("jane smith", "654321", "jane.s@mail.com")
-	fmt.Println(user)
-
-	users := models.ListUsers()
-	fmt.Println(users)
-
-	user := models.GetUser(2)
-	fmt.Println(user)
-
-	user.Username = "juan perez"
-	user.Save()
-	fmt.Println(models.ListUsers())
-
-	user.Delete()
-
-	db.Close()
-}
-*/
