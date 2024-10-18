@@ -3,10 +3,12 @@ package models
 import "goweb/db"
 
 type User struct {
-	Id       int64
-	Username string
-	Password string
-	Email    string
+	// Id       int64  `xml:"id"` // Respuesta XML
+	// Id       int64  `yaml:"id"` // Respuesta yaml
+	Id       int64  `json:"id"` // Respuesta json
+	Username string `json:"username"`
+	Password string `json:"password"`
+	Email    string `json:"email"`
 }
 
 type Users []User
